@@ -38,6 +38,19 @@ function apagarTransacao(event) {
     console.log(nomeItemTransacao, valorItemTransacao)
 
     if (deletar) {
+        saldoAtual -= valorItemTransacao;
+        imprimirBalancoTotalNaTela(saldoAtual);
+        
+        if (valorItemTransacao < 0) {
+            saldoNegativo -= valorItemTransacao
+            imprimirSaldoPositivoOuNegativoNaTela(moneyMinus, saldoNegativo);
+        }
+
+        if (valorItemTransacao > 0) {
+            saldoPositivo -= valorItemTransacao
+            imprimirSaldoPositivoOuNegativoNaTela(moneyPlus, saldoPositivo);
+        }
+        
         itemTransacao.remove();
         banco = banco.filter((item) => item.nomeTransacao !== nomeItemTransacao);
         adicionarTransacaoBD();
@@ -91,6 +104,8 @@ function adicionarTransacao(event) {
 
         adicionarTransacaoBD(banco);
         addTransacoesContainer(nomeTransacao, valorTansacao);
+    } else {
+        alert('É necessário adicionar o nome e também o valor da transação.');
     };
 
     form.reset();
